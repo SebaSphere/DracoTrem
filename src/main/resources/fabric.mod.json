@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "cringemod",
+  "version": "${version}",
+  "name": "CringeMod",
+  "description": "",
+  "authors": [
+    "SebaSphere"
+  ],
+  "contact": {},
+  "license": "LGPL-3.0",
+  "icon": "assets/CringeMod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "dev.sebastianb.cringemod.client.CringeModClient"
+    ],
+    "main": [
+      "dev.sebastianb.cringemod.CringeMod"
+    ]
+  },
+  "mixins": [
+    "CringeMod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.0+build.208",
+    "fabric": "*",
+    "minecraft": "1.16.3"
+  }
+}
