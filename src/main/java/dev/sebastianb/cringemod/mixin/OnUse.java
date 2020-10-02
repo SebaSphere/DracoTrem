@@ -31,6 +31,8 @@ public abstract class OnUse {
 
         if (world.getBlockState(respawnAnchor).getBlock() instanceof RespawnAnchorBlock) {
             System.out.println("has been click");
+            cir.setReturnValue(ActionResult.PASS); //sets the return value to pass. Check the ActionResult class for more values
+
         }
     }
 }
