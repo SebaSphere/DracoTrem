@@ -35,7 +35,6 @@ public abstract class OnUse {
 
             //ha fuck you
             player.kill();
-            PlayerEntity
         }
 
 
