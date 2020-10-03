@@ -1,12 +1,11 @@
-package dev.sebastianb.cringemod.mixin;
+package dev.sebastianb.dracotrem.mixin;
 
-import dev.sebastianb.cringemod.sounds.ModIDSounds;
+import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DragonEggBlock;
 import net.minecraft.block.RespawnAnchorBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -56,7 +55,7 @@ public abstract class OnUse {
     private void soundPlayer(PlayerEntity player, World world, BlockPos soundSource, String identifier) {
         switch (identifier) {
             case "eggError":
-                world.playSound(player, soundSource, ModIDSounds.DRAGONEGGHIT_ERROR, SoundCategory.BLOCKS, 1f, 1f);
+                world.playSound(player, soundSource, DracoTremSounds.DRAGONEGGHIT_ERROR, SoundCategory.BLOCKS, 1f, 1f);
                 break;
             case "eggSuccess":
                 world.playSound(player, soundSource, SoundEvents.BLOCK_ANVIL_FALL, SoundCategory.BLOCKS, 1f, 1f);

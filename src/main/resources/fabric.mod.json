@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "cringemod",
+  "id": "dracotrem",
   "version": "${version}",
-  "name": "CringeMod",
+  "name": "DracoTrem",
   "description": "",
   "authors": [
     "SebaSphere"
   ],
   "contact": {},
   "license": "LGPL-3.0",
-  "icon": "assets/CringeMod/icon.png",
+  "icon": "assets/dracotrem/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "dev.sebastianb.cringemod.client.CringeModClient"
+      "dev.sebastianb.dracotrem.client.DracoTremClient"
     ],
     "main": [
-      "dev.sebastianb.cringemod.CringeMod"
+      "dev.sebastianb.dracotrem.DracoTrem"
     ]
   },
   "mixins": [
-    "CringeMod.mixins.json"
+    "DracoTrem.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.10.0+build.208",

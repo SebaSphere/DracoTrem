@@ -1,11 +1,11 @@
-package dev.sebastianb.cringemod.sounds;
+package dev.sebastianb.dracotrem.sounds;
 
-import dev.sebastianb.cringemod.Constants;
+import dev.sebastianb.dracotrem.Constants;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ModIDSounds {
+public class DracoTremSounds {
     public static final SoundEvent DRAGONEGGHIT_ERROR = new SoundEvent(new Identifier(Constants.MOD_ID, "dragonegghit_error"));
 
 
