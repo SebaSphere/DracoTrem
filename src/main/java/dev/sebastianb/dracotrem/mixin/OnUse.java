@@ -3,7 +3,10 @@ package dev.sebastianb.dracotrem.mixin;
 import dev.sebastianb.dracotrem.blocks.multiblock.EndAlterMultiblock;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.mob.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.EndCrystalItem;
 import net.minecraft.sound.SoundCategory;
@@ -12,6 +15,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,6 +47,7 @@ public abstract class OnUse {
 
         if (world.isClient) {
             if (anchorUnderEgg) {
+                soundPlayer(player,world,respawnAnchor,"eggError");
                 cir.setReturnValue(ActionResult.PASS); //Use this so the teleportation animation does not happen
             }
             return;
@@ -51,7 +57,7 @@ public abstract class OnUse {
             soundPlayer(player,world,respawnAnchor,"eggError");
             cir.setReturnValue(ActionResult.PASS); //Serverside checker so dragon egg does not teleport. Check the ActionResult class for more info.
                 for (Vec3i blockPositionsBase : EndAlterMultiblock.dragonEggAlter) {
-                    if ((world.getBlockState(respawnAnchor.add(blockPositionsBase)).getBlock() instanceof CryingObsidianBlock)) { //checks if the block is crying obsidian for towers
+                    if (world.getBlockState(respawnAnchor.add(blockPositionsBase)).getBlock() instanceof CryingObsidianBlock) { //checks if the block is crying obsidian for towers
                         blockCount++;
                         if (blockCount == EndAlterMultiblock.dragonEggAlter.size()) {
                             multiblockValid = true;
@@ -59,8 +65,9 @@ public abstract class OnUse {
                     }
                 }
             if (multiblockValid) {
-                System.out.println("AAAA");
-                //check for if there are crystals at coords above crying obby
+//                for (Vec3d x: EndAlterMultiblock.dragonEggAlterEntity) {
+//                    if (world.getEntitiesByType(EntityType.END_CRYSTAL, new Box(new BlockPos(x)), ))
+//                }
             }
 
         }
@@ -86,4 +93,7 @@ public abstract class OnUse {
 
         }
     }
+
+
+
 }
