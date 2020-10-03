@@ -29,8 +29,6 @@ public abstract class OnUse {
 
     private Random r = new Random();
 
-
-
     @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     private void used(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         BlockPos hitBlockPos = hit.getBlockPos();
@@ -40,10 +38,8 @@ public abstract class OnUse {
 
             soundPlayer(player, world, respawnAnchor, "eggError");
             cir.setReturnValue(ActionResult.PASS); //sets the return value to pass. Check the ActionResult class for more values
-
         }
     }
-
 
     /**
      * Plays a sound
@@ -62,11 +58,6 @@ public abstract class OnUse {
                 break;
             default:
                 world.playSound(player, soundSource, SoundEvents.ENTITY_PIG_DEATH, SoundCategory.MASTER, 1f, 1f);
-
         }
-
-
-
     }
-
 }
