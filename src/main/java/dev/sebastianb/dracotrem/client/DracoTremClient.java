@@ -8,10 +8,5 @@ import net.fabricmc.api.Environment;
 @Environment(EnvType.CLIENT)
 public class DracoTremClient implements ClientModInitializer {
     @Override
-    public void onInitializeClient() {
-
-
-
-
-    }
+    public void onInitializeClient() {}
 }
