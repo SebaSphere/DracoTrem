@@ -33,17 +33,17 @@ public class EndAlterMultiblock {
             )
     );
 
-    public static final ArrayList<Vec3d> dragonEggAlterEntity = new ArrayList<Vec3d>(
+    public static final ArrayList<Vec3i> dragonEggAlterEntity = new ArrayList<Vec3i>(
             Arrays.asList(
 
-                    new Vec3d(2,2,2),
-                    new Vec3d(-2,2,2),
-                    new Vec3d(2,2,-2),
-                    new Vec3d(-2,2,-2),
-                    new Vec3d(3,2,0),
-                    new Vec3d(-3,2,0),
-                    new Vec3d(0,2,-3),
-                    new Vec3d(0,2,3)
+                    new Vec3i(2,2,2),
+                    new Vec3i(-2,2,2),
+                    new Vec3i(2,2,-2),
+                    new Vec3i(-2,2,-2),
+                    new Vec3i(3,2,0),
+                    new Vec3i(-3,2,0),
+                    new Vec3i(0,2,-3),
+                    new Vec3i(0,2,3)
             )
     );
 

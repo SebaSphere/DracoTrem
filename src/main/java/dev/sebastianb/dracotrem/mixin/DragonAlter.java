@@ -2,10 +2,10 @@ package dev.sebastianb.dracotrem.mixin;
 
 import dev.sebastianb.dracotrem.blocks.multiblock.EndAlterMultiblock;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CryingObsidianBlock;
-import net.minecraft.block.DragonEggBlock;
-import net.minecraft.block.RespawnAnchorBlock;
+import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -13,6 +13,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.List;
 
 
 /*
@@ -46,7 +49,7 @@ public abstract class DragonAlter {
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         BlockPos hitBlockPos = hit.getBlockPos();
         BlockPos respawnAnchor = hitBlockPos.add(0,-1,0); // checks block beneath the egg
-        boolean anchorUnderEgg = world.getBlockState(respawnAnchor).getBlock() instanceof RespawnAnchorBlock; //Boolean for if anchor is under a dragon egg
+        boolean anchorUnderEgg = world.getBlockState(respawnAnchor) == Blocks.RESPAWN_ANCHOR.getDefaultState(); //Boolean for if anchor is under a dragon egg
         boolean multiblockValid = false; //Does the multiblock have the correct amount of blocks?
         int blockCount = 0; //inits the multiblock count checker
 
@@ -62,19 +65,23 @@ public abstract class DragonAlter {
             soundPlayer(player,world,respawnAnchor,"eggError");
             cir.setReturnValue(ActionResult.PASS); //Serverside checker so dragon egg does not teleport. Check the ActionResult class for more info.
                 for (Vec3i blockPositionsBase : EndAlterMultiblock.dragonEggAlter) {
-                    if (world.getBlockState(respawnAnchor.add(blockPositionsBase)).getBlock() instanceof CryingObsidianBlock) { //checks if the block is crying obsidian for towers
+                    if (world.getBlockState(respawnAnchor.add(blockPositionsBase)) == Blocks.CRYING_OBSIDIAN.getDefaultState()) { //checks if the block is crying obsidian for towers
                         blockCount++;
                         if (blockCount == EndAlterMultiblock.dragonEggAlter.size()) {
                             multiblockValid = true;
                         }
                     }
                 }
-            if (multiblockValid) {
-//                for (Vec3d x: EndAlterMultiblock.dragonEggAlterEntity) {
-//                    if (world.getEntitiesByType(EntityType.END_CRYSTAL, new Box(new BlockPos(x)), ))
-//                }
-            }
 
+            if (multiblockValid) {
+                for (Vec3i x: EndAlterMultiblock.dragonEggAlterEntity) {
+                    Vec3i relPos = respawnAnchor.add(x);
+                    List<Entity> list = world.getOtherEntities((Entity) null, new Box(relPos.getX(), relPos.getY(), relPos.getZ(), relPos.getX() + 1.0D, relPos.getY() + 2.0D, relPos.getZ() + 1.0D));
+                    if (!list.isEmpty()) {
+                        System.out.println("AAA");
+                    }
+                }
+            }
         }
     }
 
