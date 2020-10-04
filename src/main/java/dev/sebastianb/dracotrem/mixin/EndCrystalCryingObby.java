@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
+
 @Mixin(EndCrystalItem.class)
 public class EndCrystalCryingObby {
 
@@ -27,10 +28,10 @@ public class EndCrystalCryingObby {
         BlockState blockState = world.getBlockState(blockPos);
         if (blockState.isOf(Blocks.CRYING_OBSIDIAN)) {
             BlockPos blockPos2 = blockPos.up();
-            double x = (double)blockPos2.getX();
-            double y = (double)blockPos2.getY();
-            double z = (double)blockPos2.getZ();
-            List<Entity> list = world.getOtherEntities((Entity)null, new Box(x, y, z, x + 1.0D, y + 2.0D, z + 1.0D));
+            double x = blockPos2.getX();
+            double y = blockPos2.getY();
+            double z = blockPos2.getZ();
+            List<Entity> list = world.getOtherEntities(null, new Box(x, y, z, x + 1.0D, y + 2.0D, z + 1.0D));
             if (!list.isEmpty()) {
                 cir.setReturnValue(ActionResult.FAIL);
                 return;
@@ -41,5 +42,4 @@ public class EndCrystalCryingObby {
             world.spawnEntity(endCrystalEntity);
         }
     }
-
 }

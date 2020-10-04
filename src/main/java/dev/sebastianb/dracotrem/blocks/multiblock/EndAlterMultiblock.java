@@ -1,6 +1,5 @@
 package dev.sebastianb.dracotrem.blocks.multiblock;
 
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Arrays;
 
 public class EndAlterMultiblock {
 
-    public static final ArrayList<Vec3i> dragonEggAlter = new ArrayList<Vec3i>(
+    public static final ArrayList<Vec3i> dragonEggAlter = new ArrayList<>(
             Arrays.asList(
                     //layer 1
                     new Vec3i(2,0,2),
@@ -33,7 +32,7 @@ public class EndAlterMultiblock {
             )
     );
 
-    public static final ArrayList<Vec3i> dragonEggAlterEntity = new ArrayList<Vec3i>(
+    public static final ArrayList<Vec3i> dragonEggAlterEntity = new ArrayList<>(
             Arrays.asList(
 
                     new Vec3i(2,2,2),
@@ -46,10 +45,4 @@ public class EndAlterMultiblock {
                     new Vec3i(0,2,3)
             )
     );
-
-
-
-
-
-
 }
