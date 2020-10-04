@@ -2,9 +2,12 @@ package dev.sebastianb.dracotrem.mixin;
 
 import dev.sebastianb.dracotrem.blocks.multiblock.EndAlterMultiblock;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.boss.dragon.EnderDragonSpawnState;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -73,15 +76,26 @@ public abstract class DragonAlter {
                     }
                 }
             if (multiblockValid) {
+                blockCount = 0;
                 for (Vec3i x: EndAlterMultiblock.dragonEggAlterEntity) {
                     Vec3i relPos = respawnAnchor.add(x);
                     List<Entity> list = world.getOtherEntities((Entity) null, new Box(relPos.getX(), relPos.getY(), relPos.getZ(), relPos.getX() + 1.0D, relPos.getY() + 2.0D, relPos.getZ() + 1.0D));
                     if (!list.isEmpty()) {
-                        System.out.println("AAA");
+                        if (list.get(0) instanceof EndCrystalEntity) {
+                            blockCount++;
+                            if (blockCount == 8) {
+                                startIslandSpawning(world);
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+
+
+    private void startIslandSpawning(World world) {
+        System.out.println("AA");
     }
 
     /**
@@ -104,7 +118,4 @@ public abstract class DragonAlter {
 
         }
     }
-
-
-
 }
