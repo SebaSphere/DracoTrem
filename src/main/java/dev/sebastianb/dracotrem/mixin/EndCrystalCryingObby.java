@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 
+@SuppressWarnings("unused")
 @Mixin(EndCrystalItem.class)
 public class EndCrystalCryingObby {
 
