@@ -1,6 +1,8 @@
 {
   "itemGroup.dracotrem.items": "Draco Trem Items",
   "item.dracotrem.dragon_egg_shard": "Dragon Egg Shard",
-  "item.dracotrem.dragon_heart": "Dragon Heart"
+  "item.dracotrem.dragon_heart": "Dragon Heart",
 
+
+  "subtitles.dracotrem.dragonegghit_error": "Egg Grunted"
 }
