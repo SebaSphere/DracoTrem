@@ -14,7 +14,7 @@ import static dev.sebastianb.dracotrem.DracoTrem.MOD_ID;
 
 public class BabyDragonEntityRenderer extends MobEntityRenderer<BabyDragonEntity, BabyDragonEntityModel> {
 
-    private static final Identifier TEXTURE = new Identifier(MOD_ID, "textures/entity/babydragon.png");
+    private static final Identifier TEXTURE = new Identifier(MOD_ID, "textures/entity/baby_dragon.png");
 
 
     public BabyDragonEntityRenderer(EntityRenderDispatcher dispatcher) {
