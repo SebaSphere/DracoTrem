@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "dracotrem:dragon_egg_shard"
+    }
+  },
+  "result": {
+    "item": "minecraft:dragon_egg",
+    "count": 1
+  }
+}
