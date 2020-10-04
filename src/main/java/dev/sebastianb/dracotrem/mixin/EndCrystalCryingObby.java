@@ -35,6 +35,7 @@ public class EndCrystalCryingObby {
                 cir.setReturnValue(ActionResult.FAIL);
                 return;
             }
+            context.getStack().decrement(1);
             EndCrystalEntity endCrystalEntity = new EndCrystalEntity(world, x + 0.5D, y, z + 0.5D);
             endCrystalEntity.setShowBottom(false);
             world.spawnEntity(endCrystalEntity);

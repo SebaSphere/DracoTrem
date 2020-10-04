@@ -17,6 +17,8 @@ public class DracoTremItems {
 
     // MATERIALS
     public static final Item DRAGON_EGG_SHARD = registerItem(Constants.Items.DRAGON_EGG_SHARD, new Item(new Item.Settings().group(ITEMS_GROUP)));
+    public static final Item DRAGON_HEART = registerItem(Constants.Items.DRAGON_HEART, new Item(new Item.Settings().group(ITEMS_GROUP)));
+
 
 
     private static <T extends Item> T registerItem(String id, T item) {

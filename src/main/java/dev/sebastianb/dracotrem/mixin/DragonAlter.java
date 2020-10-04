@@ -49,7 +49,7 @@ public abstract class DragonAlter {
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         BlockPos hitBlockPos = hit.getBlockPos();
         BlockPos respawnAnchor = hitBlockPos.add(0,-1,0); // checks block beneath the egg
-        boolean anchorUnderEgg = world.getBlockState(respawnAnchor) == Blocks.RESPAWN_ANCHOR.getDefaultState(); //Boolean for if anchor is under a dragon egg
+        boolean anchorUnderEgg = world.getBlockState(respawnAnchor).get(RespawnAnchorBlock.CHARGES) == 4; //Boolean for if anchor is under a dragon egg
         boolean multiblockValid = false; //Does the multiblock have the correct amount of blocks?
         int blockCount = 0; //inits the multiblock count checker
 
@@ -72,7 +72,6 @@ public abstract class DragonAlter {
                         }
                     }
                 }
-
             if (multiblockValid) {
                 for (Vec3i x: EndAlterMultiblock.dragonEggAlterEntity) {
                     Vec3i relPos = respawnAnchor.add(x);
