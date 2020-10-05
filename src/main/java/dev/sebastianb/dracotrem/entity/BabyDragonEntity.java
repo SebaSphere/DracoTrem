@@ -8,12 +8,14 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
@@ -23,7 +25,7 @@ import software.bernie.geckolib.event.AnimationTestEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
 
-public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAnimatedEntity {
+public class BabyDragonEntity extends HostileEntity implements RangedAttackMob, IAnimatedEntity {
 
     private final ServerBossBar bossBar;
     private final EntityAnimationManager manager;
@@ -39,9 +41,6 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAni
 
         this.manager = new EntityAnimationManager();
         this.controller = new EntityAnimationController(this, "flapController", 20, this::animationPredicate);
-    }
-
-    private void registerAnimationControllers() {
         this.manager.addAnimationController(controller);
     }
 
@@ -53,7 +52,7 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAni
     }
 
     private <E extends BabyDragonEntity> boolean animationPredicate(AnimationTestEvent<E> event) {
-        this.controller.setAnimation(new AnimationBuilder().addAnimation("flap"));
+        this.controller.setAnimation(new AnimationBuilder().addAnimation("flap", true));
         return true;
     }
 
@@ -71,7 +70,14 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAni
     protected void mobTick() {
         super.mobTick();
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
-        this.controller.setAnimation(new AnimationBuilder().addAnimation("flap"));
+
+        Vec3d vec3d = this.getVelocity();
+        Vec3d vec3d2 = vec3d.add((0.5D - vec3d.x) * 0.1D, (0.699999988079071D - vec3d.y) * 0.1D, (0.5D - vec3d.z) * 0.1D);
+        this.setVelocity(vec3d2);
+        float g = (float)(MathHelper.atan2(vec3d2.z, vec3d2.x) * 57.2957763671875D) - 90.0F;
+        float h = MathHelper.wrapDegrees(g - this.yaw);
+        this.forwardSpeed = 0.5F;
+        this.yaw += h;
     }
 
     @Override
