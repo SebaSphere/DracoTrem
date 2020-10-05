@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.MusicDiscItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
@@ -19,18 +20,15 @@ public class DracoTremItems {
             .build();
 
 
+    // Music disc item settings
     private static final Item.Settings MUSIC_DISC = new Item.Settings().maxCount(1).group(ITEMS_GROUP).rarity(Rarity.RARE).maxCount(1);
-
-
 
     // Items
     public static final Item DRAGON_EGG_SHARD = registerItem(Constants.Items.DRAGON_EGG_SHARD, new Item(new Item.Settings().group(ITEMS_GROUP)));
     public static final Item DRAGON_HEART = registerItem(Constants.Items.DRAGON_HEART, new Item(new Item.Settings().group(ITEMS_GROUP)));
 
     // Music Disc
-    public static final Item DRAGON_BOSS_MUSIC = registerItem(Constants.Items.DRAGON_BOSS_MUSIC_DISC, new BabyDragonMusicDisc(14,DracoTremSounds.DRAGON_BOSS_MUSIC, MUSIC_DISC));
-
-
+    public static final Item DRAGON_BOSS_MUSIC = registerItem(Constants.Items.DRAGON_BOSS_MUSIC_DISC, new DracoTremMusicDisc(14, DracoTremSounds.DRAGON_BOSS_MUSIC, MUSIC_DISC));
 
 
     private static <T extends Item> T registerItem(String id, T item) {
