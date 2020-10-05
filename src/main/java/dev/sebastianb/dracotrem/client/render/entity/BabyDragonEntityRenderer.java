@@ -26,6 +26,4 @@ public class BabyDragonEntityRenderer extends MobEntityRenderer<BabyDragonEntity
     public Identifier getTexture(BabyDragonEntity entity) {
         return TEXTURE;
     }
-
-
 }
