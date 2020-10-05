@@ -16,12 +16,18 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animation.builder.AnimationBuilder;
+import software.bernie.geckolib.animation.controller.EntityAnimationController;
+import software.bernie.geckolib.entity.IAnimatedEntity;
+import software.bernie.geckolib.event.AnimationTestEvent;
+import software.bernie.geckolib.manager.EntityAnimationManager;
 
 
-public class BabyDragonEntity extends BatEntity implements RangedAttackMob {
+public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAnimatedEntity {
 
     private final ServerBossBar bossBar;
-
+    private final EntityAnimationManager manager;
+    private final EntityAnimationController controller;
 
     public BabyDragonEntity(EntityType<? extends BabyDragonEntity> entityType, World world) {
         super(entityType, world);
@@ -30,6 +36,13 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob {
                 .setThickenFog(true);
         this.setHealth(this.getMaxHealth());
         this.experiencePoints = 50;
+
+        this.manager = new EntityAnimationManager();
+        this.controller = new EntityAnimationController(this, "flapController", 20, this::animationPredicate);
+    }
+
+    private void registerAnimationControllers() {
+        this.manager.addAnimationController(controller);
     }
 
     public static DefaultAttributeContainer.Builder createBabyDragonAttributes() {
@@ -39,10 +52,21 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 48.0D);
     }
 
+    private <E extends BabyDragonEntity> boolean animationPredicate(AnimationTestEvent<E> event) {
+        this.controller.setAnimation(new AnimationBuilder().addAnimation("flap"));
+        return true;
+    }
+
+    @Override
+    public EntityAnimationManager getAnimationManager() {
+        return this.manager;
+    }
+
     @Override
     protected void mobTick() {
         super.mobTick();
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
+        this.controller.setAnimation(new AnimationBuilder().addAnimation("flap"));
     }
 
     @Override
