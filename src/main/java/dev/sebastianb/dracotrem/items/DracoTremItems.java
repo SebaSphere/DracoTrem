@@ -28,7 +28,7 @@ public class DracoTremItems {
     public static final Item DRAGON_HEART = registerItem(Constants.Items.DRAGON_HEART, new Item(new Item.Settings().group(ITEMS_GROUP)));
 
     // Music Disc
-    public static final Item DRAGON_BOSS_MUSIC = registerItem(Constants.Items.DRAGON_BOSS_MUSIC_DISC, new BabyDragonMusicDisk(14,DracoTremSounds.DRAGON_BOSS_MUSIC, MUSIC_DISC));
+    public static final Item DRAGON_BOSS_MUSIC = registerItem(Constants.Items.DRAGON_BOSS_MUSIC_DISC, new BabyDragonMusicDisc(14,DracoTremSounds.DRAGON_BOSS_MUSIC, MUSIC_DISC));
 
 
 

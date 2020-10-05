@@ -5,8 +5,8 @@ import net.minecraft.item.MusicDiscItem;
 import net.minecraft.sound.SoundEvent;
 
 
-public class BabyDragonMusicDisk extends MusicDiscItem {
-    protected BabyDragonMusicDisk(int comparatorOutput, SoundEvent sound, Settings settings) {
+public class BabyDragonMusicDisc extends MusicDiscItem {
+    protected BabyDragonMusicDisc(int comparatorOutput, SoundEvent sound, Settings settings) {
         super(comparatorOutput, DracoTremSounds.DRAGON_BOSS_MUSIC, settings);
     }
 }
