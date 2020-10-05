@@ -4,5 +4,11 @@
     "sounds": [
       "dracotrem:dragonegghit_error"
     ]
+  },
+  "babydragonbossmusic01": {
+    "subtitle": "subtitles.dracotrem.babydragonbossmusic01",
+    "sounds": [
+      "dracotrem:babydragonbossmusic01"
+    ]
   }
 }

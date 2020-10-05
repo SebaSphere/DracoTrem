@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "dracotrem:item/dragon_boss_music_disc"
+  }
+}
