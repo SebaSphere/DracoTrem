@@ -7,7 +7,10 @@
   "authors": [
     "SebaSphere"
   ],
-  "contact": {},
+  "contact": {
+    "sources": "https://github.com/SebaSphere/CringeNaeNaeBaby",
+    "issues": "https://github.com/SebaSphere/CringeNaeNaeBaby/issues"
+  },
   "license": "LGPL-3.0",
   "icon": "assets/dracotrem/icon.png",
   "environment": "*",
@@ -25,6 +28,10 @@
   "depends": {
     "fabricloader": ">=0.10.0+build.208",
     "fabric": "*",
-    "minecraft": "1.16.3"
+    "minecraft": "1.16.3",
+    "geckolib": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
   }
 }
