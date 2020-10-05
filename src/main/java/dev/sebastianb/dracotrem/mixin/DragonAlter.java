@@ -1,13 +1,9 @@
 package dev.sebastianb.dracotrem.mixin;
 
-import dev.sebastianb.dracotrem.blocks.multiblock.EndAlterMultiblock;
+import dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter.EndAlterMultiblock;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.boss.dragon.EnderDragonSpawnState;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -17,7 +13,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,7 +47,7 @@ public abstract class DragonAlter {
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         BlockPos hitBlockPos = hit.getBlockPos();
         BlockPos respawnAnchor = hitBlockPos.add(0,-1,0); // checks block beneath the egg
-        boolean anchorUnderEgg = world.getBlockState(respawnAnchor).get(RespawnAnchorBlock.CHARGES) == 4; //Boolean for if anchor is under a dragon egg
+        boolean anchorUnderEgg = (world.getBlockState(respawnAnchor).getBlock() instanceof RespawnAnchorBlock) && (world.getBlockState(respawnAnchor).get(RespawnAnchorBlock.CHARGES) == 4); //Boolean for if anchor is under a dragon egg
         boolean multiblockValid = false; //Does the multiblock have the correct amount of blocks?
         int blockCount = 0; //inits the multiblock count checker
 
@@ -63,6 +58,8 @@ public abstract class DragonAlter {
             }
             return;
         }
+
+
 
         if (anchorUnderEgg) {
             soundPlayer(player,world,respawnAnchor,"eggError");
@@ -84,7 +81,7 @@ public abstract class DragonAlter {
                         if (list.get(0) instanceof EndCrystalEntity) {
                             blockCount++;
                             if (blockCount == 8) {
-                                startIslandSpawning(world);
+                                startIslandSpawning(world, respawnAnchor, cir);
                             }
                         }
                     }
@@ -94,8 +91,9 @@ public abstract class DragonAlter {
     }
 
 
-    private void startIslandSpawning(World world) {
-        System.out.println("AA");
+    private void startIslandSpawning(World world, BlockPos respawnAnchor, CallbackInfoReturnable<ActionResult> cir) {
+        world.removeBlock(respawnAnchor.add(0,1,0), false);
+        //discharge block
     }
 
     /**

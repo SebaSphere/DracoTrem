@@ -1,4 +1,4 @@
-package dev.sebastianb.dracotrem.blocks.multiblock;
+package dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
