@@ -63,6 +63,11 @@ public class BabyDragonEntity extends BatEntity implements RangedAttackMob, IAni
     }
 
     @Override
+    public boolean isPersistent() {
+        return true;
+    }
+
+    @Override
     protected void mobTick() {
         super.mobTick();
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
