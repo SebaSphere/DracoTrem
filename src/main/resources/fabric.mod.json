@@ -3,9 +3,10 @@
   "id": "dracotrem",
   "version": "${version}",
   "name": "DracoTrem",
-  "description": "",
+  "description": "Adds the ability to hatch the dragon egg. What could be inside...",
   "authors": [
-    "SebaSphere"
+    "SebaSphere",
+    "craftablescience"
   ],
   "contact": {
     "sources": "https://github.com/SebaSphere/CringeNaeNaeBaby",
