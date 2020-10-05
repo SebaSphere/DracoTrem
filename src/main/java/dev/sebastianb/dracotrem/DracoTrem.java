@@ -1,5 +1,6 @@
 package dev.sebastianb.dracotrem;
 
+import dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter.EnderAlterChecker;
 import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.items.DracoTremItems;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;

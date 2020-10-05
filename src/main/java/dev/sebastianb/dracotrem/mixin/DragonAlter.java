@@ -94,6 +94,7 @@ public abstract class DragonAlter {
     private void startIslandSpawning(World world, BlockPos respawnAnchor, CallbackInfoReturnable<ActionResult> cir) {
         world.removeBlock(respawnAnchor.add(0,1,0), false);
         //discharge block
+        world.setBlockState(respawnAnchor, Blocks.RESPAWN_ANCHOR.getDefaultState());
     }
 
     /**
