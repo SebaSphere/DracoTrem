@@ -8,6 +8,26 @@
     "SebaSphere",
     "craftablescience"
   ],
+  "contributors": [
+    {
+      "name": "SebaSphere",
+      "contact": {
+        "homepage": "https://github.com/SebaSphere"
+      }
+    },
+    {
+      "name": "craftablescience",
+      "contact": {
+        "homepage": "https://github.com/craftablescience"
+      }
+    },
+    {
+      "name": "Greedy Oyster",
+      "contact": {
+        "homepage": "https://www.youtube.com/c/GreedyOyster"
+      }
+    }
+  ],
   "contact": {
     "sources": "https://github.com/SebaSphere/CringeNaeNaeBaby",
     "website": "https://github.com/SebaSphere/CringeNaeNaeBaby",
