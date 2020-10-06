@@ -6,8 +6,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 
 import static dev.sebastianb.dracotrem.DracoTrem.MOD_ID;
 
@@ -20,6 +20,11 @@ public class BabyDragonEntityRenderer extends MobEntityRenderer<BabyDragonEntity
 
     public BabyDragonEntityRenderer(EntityRenderDispatcher dispatcher) {
         super(dispatcher, new BabyDragonEntityModel(), 0.5F);
+    }
+
+    @Override
+    protected int getBlockLight(BabyDragonEntity entity, BlockPos blockPos) {
+        return 12;
     }
 
     @Override
