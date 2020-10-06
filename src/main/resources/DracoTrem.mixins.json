@@ -4,7 +4,8 @@
   "package": "dev.sebastianb.dracotrem.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EndCrystalCryingObby"
+    "EndCrystalCryingObby",
+    "StopDragonBreak"
   ],
   "client": [
   ],

@@ -62,13 +62,12 @@ public class Scheduler {
 		ServerTickEvents.END_SERVER_TICK.register(m -> {
 			this.currentTick = m.getTicks();
 			List<Consumer<MinecraftServer>> runnables = this.taskQueue.remove(this.currentTick);
-			if (runnables != null) for (int i = 0; i < runnables.size(); i++) {
-				Consumer<MinecraftServer> runnable = runnables.get(i);
+			if (runnables != null) for (Consumer<MinecraftServer> runnable : runnables) {
 				runnable.accept(m);
 
-				if(runnable instanceof Repeating) {// reschedule repeating tasks
+				if (runnable instanceof Repeating) {// reschedule repeating tasks
 					Repeating repeating = ((Repeating) runnable);
-					if(repeating.shouldQueue(this.currentTick))
+					if (repeating.shouldQueue(this.currentTick))
 						this.queue(runnable, ((Repeating) runnable).next);
 				}
 			}

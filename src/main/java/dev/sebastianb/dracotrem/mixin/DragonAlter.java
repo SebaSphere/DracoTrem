@@ -28,6 +28,7 @@ import java.util.List;
 Wait it's all mixins!
 Always has been...
  */
+@Deprecated
 @Mixin(DragonEggBlock.class)
 public abstract class DragonAlter {
 

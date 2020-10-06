@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
-//Going to move the multiblock out the mixin. Register this later
+//move to event later
 @SuppressWarnings("unused")
 @Mixin(DragonEggBlock.class)
 public class StopDragonBreak {
@@ -32,15 +32,4 @@ public class StopDragonBreak {
         }
     }
 
-    @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
-    private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
-        BlockPos hitBlockPos = hit.getBlockPos();
-        BlockPos respawnAnchor = hitBlockPos.add(0,-1,0); // checks block beneath the egg
-        boolean anchorUnderEgg = (world.getBlockState(respawnAnchor).getBlock() instanceof RespawnAnchorBlock) && (world.getBlockState(respawnAnchor).get(RespawnAnchorBlock.CHARGES) == 4); //Boolean for if anchor is under a dragon egg
-
-            if (anchorUnderEgg) {
-                world.playSound(player, hitBlockPos, DracoTremSounds.DRAGONEGGHIT_ERROR, SoundCategory.BLOCKS, 1f, 1f);
-                cir.setReturnValue(ActionResult.PASS); //Use this so the teleportation animation does not happen
-            }
-    }
 }

@@ -4,14 +4,15 @@ import dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter.EndAlterCheck;
 import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.items.DracoTremItems;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
+import dev.sebastianb.dracotrem.utils.Scheduler;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.util.ActionResult;
+
 
 
 public class DracoTrem implements ModInitializer {
 
     public static final String MOD_ID = "dracotrem";
+    public static Scheduler scheduler = new Scheduler();
 
     @Override
     public void onInitialize() {
