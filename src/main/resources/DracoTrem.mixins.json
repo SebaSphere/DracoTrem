@@ -4,7 +4,6 @@
   "package": "dev.sebastianb.dracotrem.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "DragonAlter",
     "EndCrystalCryingObby"
   ],
   "client": [
