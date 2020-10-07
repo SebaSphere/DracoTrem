@@ -5,7 +5,7 @@
   "elements": [
     {
       "element": {
-        "type": "minecraft:empty",
+        "type": "minecraft:single",
         "structure": "dracotrem:baby_dragon_boss/end_boss_island",
         "processors": "minecraft:mossify_10_percent"
 
