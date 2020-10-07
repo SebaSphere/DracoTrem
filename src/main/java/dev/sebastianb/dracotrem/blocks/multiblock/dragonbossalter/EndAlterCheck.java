@@ -5,12 +5,16 @@ import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
 import dev.sebastianb.dracotrem.structure.DracoTremStructures;
 import dev.sebastianb.dracotrem.structure.EndBossIslandGenerator;
 import github.Louwind.Features.impl.feature.GenericFeature;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerTask;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.structure.Structure;
@@ -31,6 +35,10 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
+
+/**
+ * kill me, now I need to learn networking
+ */
 public class EndAlterCheck {
 
     public static final GenericFeature<DefaultFeatureConfig> END_BOSS_ISLAND = new GenericFeature(new Identifier("dracotrem:end_boss_island"), DefaultFeatureConfig.CODEC);
@@ -66,6 +74,7 @@ public class EndAlterCheck {
                                             blockCount++;
                                             if (blockCount == 8) {
                                                 startIslandSpawning(world, playerEntity, dragonEggPos, respawnAnchorPos);
+                                                //startIslandSpawn(world, playerEntity, dragonEggPos, respawnAnchorPos);
                                                 return ActionResult.FAIL;
                                             }
                                         }
@@ -81,6 +90,8 @@ public class EndAlterCheck {
             return ActionResult.PASS;
         });
     }
+
+
 
     private static void startIslandSpawning(World world, PlayerEntity playerEntity, BlockPos dragonEggPos, BlockPos respawnAnchor) {
         ArrayList<EndCrystalEntity> endCrystalEntities = new ArrayList<EndCrystalEntity>();
@@ -99,8 +110,8 @@ public class EndAlterCheck {
                 BlockPos pos = respawnAnchor.add(EndAlterMultiblock.dragonAlterIslandLocation.get(num.get()));
                 endCrystalEntity.setBeamTarget(pos);
                 //place structure at coord
-                summonIsland(world, pos);
             }
+            summonIsland(world, respawnAnchor.add(EndAlterMultiblock.dragonAlterIslandLocation.get(num.get())));
             num.getAndIncrement();
         };
 
@@ -129,13 +140,26 @@ public class EndAlterCheck {
 
     }
     private static void summonIsland(World world, BlockPos endIslandPos) {
-        if (!(world.isClient)) {
-            System.out.println("AA");
+        world.setBlockState(endIslandPos, Blocks.BIRCH_LOG.getDefaultState());
+        if (!world.isClient) {
+            System.out.println("Attempting to summon at " + endIslandPos);
             ServerWorld server = (ServerWorld) world;
             ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
 
             THICK_STRIPPED_SPRUCE.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
         }
+
+//
+//        try {
+//            System.out.println("Attempting to summon at " + endIslandPos);
+//            ServerWorld server = (ServerWorld) world;
+//            ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
+//
+//            THICK_STRIPPED_SPRUCE.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
     }
 
 }
