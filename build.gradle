@@ -14,6 +14,8 @@ allprojects {
     repositories {
         maven { url "https://repo.repsy.io/mvn/gandiber/geckolib" }
         maven { url "https://maven.modmuss50.me" }
+        maven { url "https://repo.repsy.io/mvn/louwind/features-api" }
+        //maven { url 'https://jitpack.io' }
     }
 }
 
@@ -26,6 +28,7 @@ dependencies {
 
     modImplementation("io.github.prospector:modmenu:${project.modmenu_version}") { transitive = false }
     modImplementation "software.bernie.geckolib:fabric-1.16.2-geckolib:${project.geckolib_version}"
+    modImplementation "github.louwind.features-api:Features-API:1.0.0"
 }
 
 processResources {

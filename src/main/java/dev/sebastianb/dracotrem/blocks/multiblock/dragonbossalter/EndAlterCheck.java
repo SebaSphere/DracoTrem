@@ -2,6 +2,8 @@ package dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter;
 
 import dev.sebastianb.dracotrem.DracoTrem;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
+import dev.sebastianb.dracotrem.structure.DracoTremStructures;
+import dev.sebastianb.dracotrem.structure.EndBossIslandGenerator;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
@@ -9,8 +11,10 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureManager;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3i;
@@ -18,6 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
@@ -63,13 +68,16 @@ public class EndAlterCheck {
             return ActionResult.PASS;
         });
     }
+    private static final Identifier END_BOSS_ISLAND = new Identifier("baby_dragon_boss/end_boss_island");
     private static void startIslandSpawning(World world, PlayerEntity playerEntity, BlockPos dragonEggPos, BlockPos respawnAnchor) {
         ArrayList<EndCrystalEntity> endCrystalEntities = new ArrayList<EndCrystalEntity>();
         AtomicInteger num = new AtomicInteger();
+
+
         Consumer<MinecraftServer> consumer = minecraftServer -> {
             for (EndCrystalEntity endCrystalEntity: endCrystalEntities) {
                 endCrystalEntity.setBeamTarget(respawnAnchor.add(EndAlterMultiblock.dragonAlterIslandLocation.get(num.get())));
-                //StructureManager::createStructure;
+                //place structure at coord
             }
             num.getAndIncrement();
         };
