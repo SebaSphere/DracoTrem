@@ -46,14 +46,15 @@ public class EndAlterMultiblock {
     );
     public static final ArrayList<Vec3i> dragonAlterIslandLocation = new ArrayList<Vec3i>(
             Arrays.asList(
-                    new Vec3i(1,2,3),
-                    new Vec3i(5,7,-6),
-                    new Vec3i(-12,2,3),
-                    new Vec3i(-13,10,3),
-                    new Vec3i(-12,2,-5),
-                    new Vec3i(12,8,-15),
-                    new Vec3i(6,8,-10),
-                    new Vec3i(10,10,-15)
+                    new Vec3i(0,35,-40),
+                    new Vec3i(-26,35,-26),
+                    new Vec3i(-40,35,0),
+                    new Vec3i(-26,35,26),
+                    new Vec3i(0,35,40),
+                    new Vec3i(26,35,26),
+                    new Vec3i(40,35,0),
+                    new Vec3i(26,35,-26),
+                    new Vec3i(0,40,0) //resting pos
             )
     );
 

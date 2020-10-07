@@ -9,6 +9,7 @@ import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.structure.StructureManager;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -68,6 +69,7 @@ public class EndAlterCheck {
         Consumer<MinecraftServer> consumer = minecraftServer -> {
             for (EndCrystalEntity endCrystalEntity: endCrystalEntities) {
                 endCrystalEntity.setBeamTarget(respawnAnchor.add(EndAlterMultiblock.dragonAlterIslandLocation.get(num.get())));
+                //StructureManager::createStructure;
             }
             num.getAndIncrement();
         };
@@ -91,7 +93,7 @@ public class EndAlterCheck {
 
         }
         System.out.println("test");
-        DracoTrem.scheduler.repeatN(consumer, 7, 50, 30);
+        DracoTrem.scheduler.repeatN(consumer, 8, 50, 50);
         System.out.println("TEST2");
 
 
