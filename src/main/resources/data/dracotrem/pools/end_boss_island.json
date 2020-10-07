@@ -1,0 +1,16 @@
+{
+  "name": "dracotrem:end_boss_island",
+  "terminators": "empty",
+  "projection": "rigid",
+  "elements": [
+    {
+      "element": {
+        "type": "minecraft:empty",
+        "structure": "dracotrem:baby_dragon_boss/end_boss_island",
+        "processors": "minecraft:mossify_10_percent"
+
+      },
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "features:generator",
+  "pools": [
+    {
+      "type": "features:pool",
+      "pool": "dracotrem:end_boss_island",
+      "context": {
+        "type": "features:provider",
+        "rotations": "none"
+      },
+      "entries": [
+        {
+          "type": "features:entry",
+          "structure": "dracotrem:baby_dragon_boss/end_boss_island",
+          "functions": [
+            {
+              "function": "features:offset",
+              "offset": {
+                "x": -2,
+                "z": -2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
