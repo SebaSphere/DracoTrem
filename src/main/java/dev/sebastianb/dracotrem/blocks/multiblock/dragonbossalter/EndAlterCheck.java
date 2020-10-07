@@ -130,6 +130,7 @@ public class EndAlterCheck {
     }
     private static void summonIsland(World world, BlockPos endIslandPos) {
         if (!(world.isClient)) {
+            System.out.println("AA");
             ServerWorld server = (ServerWorld) world;
             ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
 
