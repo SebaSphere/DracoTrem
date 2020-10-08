@@ -17,6 +17,7 @@
               "function": "features:offset",
               "offset": {
                 "x": -2,
+                "y": -7,
                 "z": -2
               }
             }

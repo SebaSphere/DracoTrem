@@ -1,12 +1,10 @@
 package dev.sebastianb.dracotrem;
 
-import dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter.EndAlterCheck;
+import dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter.BlahEndAlterCheck;
 import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.items.DracoTremItems;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
-import dev.sebastianb.dracotrem.structure.DracoTremStructures;
 import dev.sebastianb.dracotrem.utils.Scheduler;
-import github.Louwind.Features.client.resource.StructurePoolManager;
 import net.fabricmc.api.ModInitializer;
 
 
@@ -24,6 +22,6 @@ public class DracoTrem implements ModInitializer {
         //DracoTremStructures.register(); //I think they work. I need to hook everything up now
 
         //register features
-        EndAlterCheck.register();
+        BlahEndAlterCheck.register();
     }
 }
