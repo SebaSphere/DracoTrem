@@ -1,6 +1,8 @@
 package dev.sebastianb.dracotrem.blocks.multiblock.dragonbossalter;
 
 import dev.sebastianb.dracotrem.DracoTrem;
+import dev.sebastianb.dracotrem.entity.BabyDragonEntity;
+import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
 import github.Louwind.Features.impl.feature.GenericFeature;
 import io.netty.buffer.Unpooled;
@@ -9,10 +11,13 @@ import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.decoration.EndCrystalEntity;
+import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.SummonCommand;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
@@ -21,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Spawner;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 
@@ -32,13 +38,16 @@ import java.util.function.Consumer;
 
 /**
  * kill me, now I need to learn networking
+ *
+ * -god I hate this class, SebaSphere like the day later
  */
 public class BlahEndAlterCheck {
 
     public static final GenericFeature<DefaultFeatureConfig> END_BOSS_ISLAND = new GenericFeature(new Identifier("dracotrem:end_boss_island"), DefaultFeatureConfig.CODEC);
     public static final GenericFeature<DefaultFeatureConfig> THICK_STRIPPED_SPRUCE = new GenericFeature(new Identifier("features:thick_stripped_spruce"), DefaultFeatureConfig.CODEC);
 
-    public static final Identifier ISLAND_SUMMONER = new Identifier("dracotrem", "island_summons");
+    public static final Identifier ISLAND_SUMMONER_START = new Identifier("dracotrem", "island_summons_start"); //start frame
+    public static final Identifier ISLAND_SUMMONER_GOING = new Identifier("dracotrem", "island_summons_going"); //summon islands
 
 
 
@@ -46,7 +55,7 @@ public class BlahEndAlterCheck {
 
 
     public static void register() {
-        test();
+        registerNetwork();
         checkMultiblockValidation();
     }
 
@@ -113,7 +122,7 @@ public class BlahEndAlterCheck {
 
                     PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                     passedData.writeBlockPos(endCrystalLocation.add(0,20,0));
-                    ClientSidePacketRegistry.INSTANCE.sendToServer(BlahEndAlterCheck.ISLAND_SUMMONER, passedData);
+                    ClientSidePacketRegistry.INSTANCE.sendToServer(BlahEndAlterCheck.ISLAND_SUMMONER_START, passedData);
 
 
 
@@ -123,34 +132,27 @@ public class BlahEndAlterCheck {
 
         }
 
+        PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+        passedData.writeBlockPos(respawnAnchor);
+        ClientSidePacketRegistry.INSTANCE.sendToServer(BlahEndAlterCheck.ISLAND_SUMMONER_GOING, passedData);
         System.out.println("test");
         //DracoTrem.scheduler.repeatN(consumer, 8, 50, 50);
         System.out.println("TEST2");
 
 
     }
-    private static int num = 0;
-    private static int num2 = 0;
+
 
     private static void summonIsland(World world, BlockPos endIslandPos) {
 
         if (!world.isClient) {
-            if (num == 8) {
-                System.out.println("Attempting to summon at " + endIslandPos);
-                ServerWorld server = (ServerWorld) world;
-                ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
-                if (num2 == 64) {
-                    num = 0;
-                    num2 = 0;
-                    System.out.println("aa");
-                    return;
-                }
+            System.out.println("Attempting to summon at " + endIslandPos);
+            ServerWorld server = (ServerWorld) world;
+            ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
 
-                END_BOSS_ISLAND.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
-                num=0;
-            }
-            num++;
-            num2++;
+
+            END_BOSS_ISLAND.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
+
         }
 
 
@@ -159,12 +161,18 @@ public class BlahEndAlterCheck {
 
 
     //guess I'll start pain
-    private static void test() {
+    private static void registerNetwork() {
 
 
-
-        ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER, (packetContext, attachedData) -> {
+        //networking shid for the initial animation with crystals in sky
+        ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER_START, (packetContext, attachedData) -> {
             BlockPos pos = attachedData.readBlockPos();
+            World world = packetContext.getPlayer().world;
+
+
+
+
+
             AtomicInteger islandPosIndex = new AtomicInteger(0);
             packetContext.getTaskQueue().execute(() -> {
 
@@ -174,9 +182,20 @@ public class BlahEndAlterCheck {
                         endCrystalEntity.setBeamTarget(islandLoca);
                         //place structure at coord
                     }
-                    summonIsland(packetContext.getPlayer().world, respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get())));
+                    //summonIsland(packetContext.getPlayer().world, respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get())));
                     islandPosIndex.getAndIncrement();
                 };
+                Consumer<MinecraftServer> consumer2 = minecraftServer -> {
+                    for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
+                        endCrystalEntity.setBeamTarget(null);
+                        endCrystalEntity.kill();
+
+
+                    }
+                    System.out.println("spawning dragon");
+
+                };
+
 
 
                 if (packetContext.getPlayer().world.canSetBlock(pos)) {
@@ -190,6 +209,39 @@ public class BlahEndAlterCheck {
             });
 
         });
+        //networking shid for island spawning
+        ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER_GOING, (packetContext, attachedData) -> {
+            AtomicInteger islandPosIndex = new AtomicInteger(0);
+
+
+
+            Consumer<MinecraftServer> consumer2 = minecraftServer -> {
+                for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
+                    endCrystalEntity.setBeamTarget(null);
+                    endCrystalEntity.kill();
+
+
+                }
+                System.out.println("spawning dragon");
+
+
+            };
+
+            Consumer<MinecraftServer> consumer = minecraftServer -> {
+                System.out.println(islandPosIndex);
+
+                summonIsland(packetContext.getPlayer().world, respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get())));
+                islandPosIndex.getAndIncrement();
+            };
+            packetContext.getTaskQueue().execute(() -> {
+                DracoTrem.scheduler.repeatN(consumer, 7, 50, 50);
+                DracoTrem.scheduler.queue(consumer2, 530);
+
+
+
+            });
+        });
+
     }
 
 }
