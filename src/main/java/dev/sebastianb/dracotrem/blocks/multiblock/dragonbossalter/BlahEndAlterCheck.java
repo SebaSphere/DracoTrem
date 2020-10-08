@@ -20,6 +20,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.SummonCommand;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -68,6 +69,13 @@ public class BlahEndAlterCheck {
 
             if (dragonEgg instanceof DragonEggBlock) {
                 if (world.getBlockState(respawnAnchorPos).getBlock() instanceof RespawnAnchorBlock) {
+
+                    if (dragonEggPos.getY() > 180) {
+                        playerEntity.sendMessage(Text.of("Please make the structure lower"), false);
+                        world.playSound(playerEntity, dragonEggPos, DracoTremSounds.DRAGONEGGHIT_ERROR, SoundCategory.BLOCKS, 1f, 1f);
+                        return ActionResult.FAIL;
+                    } //easy fix so you don't cheese the end crystals
+
                     for (Vec3i blockPositionsBase : EndAlterMultiblock.dragonEggAlter) {
                         if (world.getBlockState(respawnAnchorPos.add(blockPositionsBase)) == Blocks.CRYING_OBSIDIAN.getDefaultState()) { //checks if the block is crying obsidian for towers
                             blockCount++;
@@ -99,6 +107,8 @@ public class BlahEndAlterCheck {
 
 
     private static ArrayList<EndCrystalEntity> endCrystalEntities = new ArrayList<EndCrystalEntity>();
+    private static ArrayList<EndCrystalEntity> endCrystalAtIsland = new ArrayList<EndCrystalEntity>();
+
     private static BlockPos respawnAch;
 
 
@@ -119,17 +129,12 @@ public class BlahEndAlterCheck {
                     //endCrystalEntity.setBeamTarget(endCrystalLocation.add(0,200,0));
                     endCrystalEntities.add(endCrystalEntity); //adds each entity to the array list
 
-
                     PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                     passedData.writeBlockPos(endCrystalLocation.add(0,20,0));
                     ClientSidePacketRegistry.INSTANCE.sendToServer(BlahEndAlterCheck.ISLAND_SUMMONER_START, passedData);
 
-
-
                 }
             }
-
-
         }
 
         PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
@@ -168,7 +173,7 @@ public class BlahEndAlterCheck {
         ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER_START, (packetContext, attachedData) -> {
             BlockPos pos = attachedData.readBlockPos();
             World world = packetContext.getPlayer().world;
-
+            ArrayList<BlockPos> arrayList = new ArrayList<BlockPos>();
 
 
 
@@ -179,20 +184,19 @@ public class BlahEndAlterCheck {
                 Consumer<MinecraftServer> consumer = minecraftServer -> {
                     for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
                         BlockPos islandLoca = respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get()));
-                        endCrystalEntity.setBeamTarget(islandLoca);
-                        //place structure at coord
+                        endCrystalEntity.setBeamTarget(islandLoca); //sets beam location on each island
+                        if (islandPosIndex.get() == 0) {
+                            arrayList.add(islandLoca);
+                        }
                     }
-                    //summonIsland(packetContext.getPlayer().world, respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get())));
                     islandPosIndex.getAndIncrement();
                 };
                 Consumer<MinecraftServer> consumer2 = minecraftServer -> {
                     for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
                         endCrystalEntity.setBeamTarget(null);
-                        endCrystalEntity.kill();
 
 
                     }
-                    System.out.println("spawning dragon");
 
                 };
 
