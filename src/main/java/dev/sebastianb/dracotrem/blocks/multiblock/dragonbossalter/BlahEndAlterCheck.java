@@ -4,6 +4,7 @@ import dev.sebastianb.dracotrem.DracoTrem;
 import dev.sebastianb.dracotrem.entity.BabyDragonEntity;
 import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
+import github.Louwind.Features.client.resource.StructureProcessorManager;
 import github.Louwind.Features.impl.feature.GenericFeature;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -172,9 +173,6 @@ public class BlahEndAlterCheck {
         //networking shid for the initial animation with crystals in sky
         ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER_START, (packetContext, attachedData) -> {
             BlockPos pos = attachedData.readBlockPos();
-            World world = packetContext.getPlayer().world;
-            ArrayList<BlockPos> arrayList = new ArrayList<BlockPos>();
-
 
 
 
@@ -185,9 +183,8 @@ public class BlahEndAlterCheck {
                     for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
                         BlockPos islandLoca = respawnAch.add(EndAlterMultiblock.dragonAlterIslandLocation.get(islandPosIndex.get()));
                         endCrystalEntity.setBeamTarget(islandLoca); //sets beam location on each island
-                        if (islandPosIndex.get() == 0) {
-                            arrayList.add(islandLoca);
-                        }
+
+                        //maybe do stuff to set the beam target of each island to the center
                     }
                     islandPosIndex.getAndIncrement();
                 };
@@ -216,19 +213,24 @@ public class BlahEndAlterCheck {
         //networking shid for island spawning
         ServerSidePacketRegistry.INSTANCE.register(ISLAND_SUMMONER_GOING, (packetContext, attachedData) -> {
             AtomicInteger islandPosIndex = new AtomicInteger(0);
-
+            ServerWorld world = (ServerWorld) packetContext.getPlayer().world;
 
 
             Consumer<MinecraftServer> consumer2 = minecraftServer -> {
+                BabyDragonEntity babyDragonEntity = (BabyDragonEntity) DracoTremEntities.BABY_DRAGON.create(world);
                 for (EndCrystalEntity endCrystalEntity : endCrystalEntities) {
                     endCrystalEntity.setBeamTarget(null);
-                    endCrystalEntity.kill();
+
+                    //endCrystalEntity.kill();
+                    //I need to add a check to make sure this is serverside
 
 
                 }
+                babyDragonEntity.refreshPositionAfterTeleport(respawnAch.getX(), respawnAch.getY() + 40, respawnAch.getZ());
+                world.spawnEntity(babyDragonEntity);
+
+
                 System.out.println("spawning dragon");
-
-
             };
 
             Consumer<MinecraftServer> consumer = minecraftServer -> {
