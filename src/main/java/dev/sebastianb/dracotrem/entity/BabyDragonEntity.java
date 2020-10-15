@@ -79,7 +79,7 @@ public class BabyDragonEntity extends HorseBaseEntity implements IAnimatedEntity
     public void travel(Vec3d movementInput) {
         if (this.isAlive()) {
             if (this.hasPassengers() && this.canBeControlledByRider()) {
-                this.setVelocity(Vec3d.ZERO);
+                this.setVelocity(new Vec3d(this.getVelocity().x, 0.0D, this.getVelocity().z));
                 LivingEntity livingEntity = (LivingEntity)this.getPrimaryPassenger();
                 this.yaw = livingEntity.yaw;
                 this.prevYaw = this.yaw;
