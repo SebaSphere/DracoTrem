@@ -4,8 +4,6 @@ import dev.sebastianb.dracotrem.DracoTrem;
 import dev.sebastianb.dracotrem.entity.BabyDragonEntity;
 import dev.sebastianb.dracotrem.entity.DracoTremEntities;
 import dev.sebastianb.dracotrem.sounds.DracoTremSounds;
-import github.Louwind.Features.client.resource.StructureProcessorManager;
-import github.Louwind.Features.impl.feature.GenericFeature;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
@@ -45,8 +43,8 @@ import java.util.function.Consumer;
  */
 public class BlahEndAlterCheck {
 
-    public static final GenericFeature<DefaultFeatureConfig> END_BOSS_ISLAND = new GenericFeature(new Identifier("dracotrem:end_boss_island"), DefaultFeatureConfig.CODEC);
-    public static final GenericFeature<DefaultFeatureConfig> THICK_STRIPPED_SPRUCE = new GenericFeature(new Identifier("features:thick_stripped_spruce"), DefaultFeatureConfig.CODEC);
+//    public static final GenericFeature<DefaultFeatureConfig> END_BOSS_ISLAND = new GenericFeature(new Identifier("dracotrem:end_boss_island"), DefaultFeatureConfig.CODEC);
+//    public static final GenericFeature<DefaultFeatureConfig> THICK_STRIPPED_SPRUCE = new GenericFeature(new Identifier("features:thick_stripped_spruce"), DefaultFeatureConfig.CODEC);
 
     public static final Identifier ISLAND_SUMMONER_START = new Identifier("dracotrem", "island_summons_start"); //start frame
     public static final Identifier ISLAND_SUMMONER_GOING = new Identifier("dracotrem", "island_summons_going"); //summon islands
@@ -157,7 +155,7 @@ public class BlahEndAlterCheck {
             ChunkGenerator chunkGenerator = server.getChunkManager().getChunkGenerator();
 
 
-            END_BOSS_ISLAND.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
+//            END_BOSS_ISLAND.generate(server, chunkGenerator, world.getRandom(), endIslandPos, DefaultFeatureConfig.INSTANCE);
 
         }
 

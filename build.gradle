@@ -28,11 +28,11 @@ dependencies {
 
     modImplementation("io.github.prospector:modmenu:${project.modmenu_version}") { transitive = false }
     modImplementation "software.bernie.geckolib:fabric-1.16.2-geckolib:${project.geckolib_version}"
-    modImplementation "github.louwind.features-api:Features-API:1.0.0"
+    //modImplementation "github.louwind.features-api:Features-API:1.0.0"
 
 
     include "software.bernie.geckolib:fabric-1.16.2-geckolib:${project.geckolib_version}"
-    include "github.louwind.features-api:Features-API:1.0.0"
+    //include "github.louwind.features-api:Features-API:1.1.0"
 
 
 
